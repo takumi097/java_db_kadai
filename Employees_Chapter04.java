@@ -21,7 +21,7 @@ public class Employees_Chapter04 {
 	                "igariTKM-0907"
 	            );
 
-	            System.out.println("データベース接続成功 : com.mysql.cj.jdbc.ConnectionImpl@xxxxxxxx");
+	            System.out.println("データベース接続成功 :" + con);
 
 	            
 	            
