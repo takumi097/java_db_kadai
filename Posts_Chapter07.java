@@ -1,6 +1,7 @@
 package kadai_007;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,7 +21,7 @@ public class Posts_Chapter07 {
         		{"1002", "2023-02-08", "お疲れ様です！", "12"},
         		{"1003", "2023-02-09", "今日も頑張ります", "18"},
         		{"1001", "2023-02-09", "無理は禁物ですよ！", "17"},
-        		{"1002", "2023-02-09", "明日から連休です", "20"},
+        		{"1002", "2023-02-09", "明日から連休ですね", "20"},
         };
 
         
@@ -46,9 +47,11 @@ public class Posts_Chapter07 {
             int rowCnt = 0;
             for(int i =0; i < userpost.length; i++ ) {
             	preparedStatement.setString(1, userpost[i][0]);
-            	preparedStatement.setString(2, userpost[i][1]);
+            	Date postedAt = Date.valueOf(userpost[i][1]);
+            	preparedStatement.setDate(2, postedAt);
             	preparedStatement.setString(3, userpost[i][2]);
-            	preparedStatement.setString(4, userpost[i][3]);
+            	int likes = Integer.parseInt(userpost[i][3]);
+            	preparedStatement.setInt(4, likes);
             	rowCnt += preparedStatement.executeUpdate();
             }
             
@@ -60,7 +63,7 @@ public class Posts_Chapter07 {
            ResultSet result = statement.executeQuery(selectsql);
            
            while(result.next()) {
-        	   String posted_at = result.getString("posted_at");
+        	   Date posted_at = result.getDate("posted_at");
         	   String post_content = result.getString("post_content");
         	   int likes = result.getInt("likes");
         	   System.out.println( result.getRow() + "件目 : 投稿日 = " + posted_at + "/ 投稿内容 = " + post_content + "/ いいね数 = " + likes);
